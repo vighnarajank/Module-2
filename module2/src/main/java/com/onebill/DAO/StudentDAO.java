@@ -14,12 +14,19 @@ import org.springframework.stereotype.Repository;
 import com.onebill.bean.Student;
 import com.onebill.exceptions.StudentNotFound;
 
+/*
+ * Implementation of DAO Methods to access data from the DB
+ */
 @Repository
 public class StudentDAO implements DAO{
+
 
 	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("student");
 	Scanner sc = new Scanner(System.in);
 
+	/*
+	 * Getting Single Entity from the Table using find()
+	 */
 	@Override
 	public Student getDetail(int id) {
 
@@ -34,6 +41,9 @@ public class StudentDAO implements DAO{
 			throw new StudentNotFound("No Student detail Found for this ID");
 	}
 
+	/*
+	 * Getting All Entities from the Table using Query
+	 */
 	@Override
 	public List<Student> getDetails() {
 
@@ -49,9 +59,15 @@ public class StudentDAO implements DAO{
 			throw new StudentNotFound("No Student details found");
 	}
 
+	/*
+	 * Inserting Single Entity to the Table
+	 */
 	@Override
 	public boolean addDetail(Student student) {
 
+		/*
+		 * Getting input of 3 term Marks
+		 */
 		System.out.println("Enter mark 1 : ");
 		int m1 = sc.nextInt();
 		System.out.println("Enter mark 2 : ");
@@ -63,8 +79,10 @@ public class StudentDAO implements DAO{
 		EntityTransaction transaction = entityManager.getTransaction();
 
 		try {
-			transaction.begin();
-			int result = (m1+m2+m3)/30;
+
+			transaction.begin();	//Transaction Begins
+
+			int result = (m1+m2+m3)/30;	//Average of 3 term marks
 			student.setMarks(result);
 
 			/*
@@ -96,17 +114,29 @@ public class StudentDAO implements DAO{
 			}catch (Exception e) {
 				System.out.println("Invalid Marks");
 			}
+
 			entityManager.persist(student);
 			transaction.commit();
+
 			return true;
 		} catch (Exception e) {
+
+			transaction.rollback();
 			e.printStackTrace();
+
 			return false;
 		}
 	}
 
+	/*
+	 * Updating Single Entity in the Table
+	 */
 	@Override
 	public boolean updateDetail(Student student) {
+
+		/*
+		 * Getting input of 3 term Marks
+		 */
 		System.out.println("Enter mark 1 : ");
 		int m1 = sc.nextInt();
 		System.out.println("Enter mark 2 : ");
@@ -116,12 +146,20 @@ public class StudentDAO implements DAO{
 
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
-		
+
 		try {
-			transaction.begin();
-			int result = (m1+m2+m3)/30;
+
+			transaction.begin();	//Transaction Begins
+
 			Student studentdb = entityManager.find(Student.class, student.getUserid());
+
+			int result = (m1+m2+m3)/30;	//Average of 3 marks	
 			studentdb.setMarks(result);
+
+			/*
+			 * This block of code calculates the grade and puts it to the database by
+			 * calculating the marks
+			 */
 			try {
 				if(result >= 9.1 && result <= 10) {
 					studentdb.setGrade("A+");
@@ -150,38 +188,51 @@ public class StudentDAO implements DAO{
 			}catch (Exception e) {
 				System.out.println("Invalid Marks");
 			}
+
 			studentdb.setEmail(student.getEmail());
 			studentdb.setName(student.getName());
-			
+
 			entityManager.persist(studentdb);
 			transaction.commit();
+
 			return true;
 		} catch (Exception e) {
+
 			e.printStackTrace();
 			transaction.rollback();
+
 			return false;
 		}
 
 	}
 
+	/*
+	 * Deleting Single Entity in the Table
+	 */
 	@Override
 	public boolean deleteDetail(int id) {
-		
+
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 
 		try {
+
 			transaction.begin();
+
 			Student stud = entityManager.find(Student.class, id);
 			entityManager.remove(stud);
+
 			transaction.commit();
 			entityManager.close();
+
 			return true;
 		} catch (Exception e) {
+
 			e.printStackTrace();
 			transaction.rollback();
+
 			return false;
 		}
 	}
-	
+
 }

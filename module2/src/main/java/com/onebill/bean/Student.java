@@ -21,17 +21,17 @@ public class Student implements Serializable{
 
 	@Id
 	private int userid;
-	
+
 	@Column
 	private String email;
-	
+
 	@Column
 	private double marks;
-	
+
 	@Column
 	private String name;
-	
+
 	@Column
 	private String grade;
-	
+
 }

@@ -8,11 +8,15 @@ import org.springframework.stereotype.Service;
 import com.onebill.DAO.StudentDAO;
 import com.onebill.bean.Student;
 
+/*
+ * Implementation of the Services Provided by DAO, 
+ * that can be accessed by the Controller Class
+ */
 @Service
 public class StudentService implements Services{
 
 	@Autowired
-	StudentDAO studentDAO;
+	StudentDAO studentDAO;	//Injecting StudentDAO's object
 
 
 	@Override
@@ -39,5 +43,5 @@ public class StudentService implements Services{
 	public boolean deleteDetail(int id) {
 		return studentDAO.deleteDetail(id);
 	}	
-	
+
 }

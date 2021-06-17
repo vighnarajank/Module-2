@@ -31,7 +31,7 @@ public class StudentController {
 	StudentService studentService;	//Injecting studentService object
 
 	/*
-	 *  Controller to input data of single student to student table
+	 *  Controller to insert data of single student to student table
 	 * 
 	 * Input :
 	 * Type = Body(raw format) JSON/XML
@@ -110,6 +110,13 @@ public class StudentController {
 		return studentResponse;
 	}
 
+	/* 
+	 * Controller to Update data of given student
+	 * Input :
+	 * Type = Body(raw format) JSON/XML
+	 * Data = Student data type with id, name, email as attributes
+	 * 		  and 3 marks in console
+	 */
 	@PutMapping(path = "/updateStudent", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public StudentResponse updateStudent(@RequestBody Student student) {
@@ -127,6 +134,13 @@ public class StudentController {
 		return studentResponse;
 	}
 
+	/* 
+	 * Controller to Delete data for single student from student table
+	 * 
+	 * Input :
+	 * Type = Parameter
+	 * Data = DB Table's primary key as 'id' and value
+	 */
 	@DeleteMapping(path = "/deleteStudent", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public StudentResponse deleteStudent(int id) {
 		StudentResponse studentResponse = new StudentResponse();
@@ -146,6 +160,13 @@ public class StudentController {
 		return studentResponse;
 	}
 
+	/* 
+	 * Controller to Fetch mark for single student from student table
+	 * 
+	 * Input :
+	 * Type = Parameter
+	 * Data = DB Table's primary key as 'id' and value
+	 */
 	@GetMapping(path = "/getMark",  produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public MarkResponse getMark(Integer id) {
 
@@ -169,6 +190,13 @@ public class StudentController {
 		return markResponse;
 	}
 
+	/* 
+	 * Controller to Fetch grade for single student from student table
+	 * 
+	 * Input :
+	 * Type = Parameter
+	 * Data = DB Table's primary key as 'id' and value
+	 */
 	@GetMapping(path = "/getGrade",  produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public GradeResponse getGrade(Integer id) {
 

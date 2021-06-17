@@ -6,11 +6,14 @@ import com.onebill.bean.Student;
 
 import lombok.Data;
 
+/*
+ * Response Class for displaying Marks
+ */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"statusCode" ,"message" ,"description"})
 public class MarkResponse {
-	
+
 	private int statusCode;
 
 	private String message;
@@ -24,5 +27,5 @@ public class MarkResponse {
 	private String name;
 
 	private double marks;
-	
+
 }
